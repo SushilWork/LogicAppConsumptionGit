@@ -20,6 +20,6 @@ steps:
     resourceGroupName: 'RG-LogicApps'
     location: 'Australia Southeast'
     templateLocation: 'URL of the file'
-    csmFileLink: 'https://raw.githubusercontent.com/SushilWork/LogicAppConsumptionGit/main/LogicAppCnspn.definition.json'
+    csmFileLink: 'https://raw.githubusercontent.com/SushilWork/LogicAppConsumptionGit/main/LogicAppCnspn.json'
     deploymentMode: 'Incremental'
     deploymentName: 'DeployPipelineTemplate'
