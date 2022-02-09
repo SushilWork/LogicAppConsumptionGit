@@ -1,54 +1,27 @@
 {
-    "$connections": {
-        "value": {
-            "servicebus": {
-                "connectionId": "/subscriptions/94c0de1a-1234-4854-8b7e-c8ff07fc8888/resourceGroups/my-rg/providers/Microsoft.Web/connections/servicebus",
-                "connectionName": "servicebus",
-                "id": "/subscriptions/94c0de1a-1234-4854-8b7e-c8ff07fc8888/providers/Microsoft.Web/locations/australiasoutheast/managedApis/servicebus"
-            }
-        }
-    },
     "definition": {
         "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
         "actions": {
-            "HTTP": {
+            "Response": {
                 "inputs": {
-                    "authentication": {
-                        "password": "u1tr@53cr37+dev",
-                        "type": "Basic",
-                        "username": "username-dev"
-                    },
-                    "body": "@base64ToString(triggerBody()?['ContentData'])",
-                    "method": "POST",
-                    "uri": "https://mysupercoolendpoint-dev.com.au/service/"
+                    "body": "Consumption Logic App 1",
+                    "statusCode": 200
                 },
+                "kind": "Http",
                 "runAfter": {},
-                "type": "Http"
+                "type": "Response"
             }
         },
         "contentVersion": "1.0.0.0",
         "outputs": {},
         "parameters": {},
         "triggers": {
-            "When_a_message_is_received_in_a_queue_(auto-complete)": {
-                "inputs": {
-                    "host": {
-                        "connection": {
-                            "name": "@parameters('$connections')['servicebus']['connectionId']"
-                        }
-                    },
-                    "method": "get",
-                    "path": "/@{encodeURIComponent('myqueue')}/messages/head",
-                    "queries": {
-                        "queueType": "Main"
-                    }
-                },
-                "recurrence": {
-                    "frequency": "Minute",
-                    "interval": 3
-                },
-                "type": "ApiConnection"
+            "manual": {
+                "inputs": {},
+                "kind": "Http",
+                "type": "Request"
             }
         }
-    }
+    },
+    "parameters": {}
 }
