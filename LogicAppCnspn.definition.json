@@ -1,27 +1,42 @@
-{
-    "definition": {
-        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-        "actions": {
-            "Response": {
-                "inputs": {
-                    "body": "Consumption Logic App 1",
-                    "statusCode": 200
-                },
-                "kind": "Http",
-                "runAfter": {},
-                "type": "Response"
-            }
-        },
-        "contentVersion": "1.0.0.0",
-        "outputs": {},
-        "parameters": {},
-        "triggers": {
-            "manual": {
-                "inputs": {},
-                "kind": "Http",
-                "type": "Request"
-            }
-        }
-    },
-    "parameters": {}
-}
+ {
+    "definition":{
+                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+                    "contentVersion": "1.0.0.0",
+                    "parameters": {},
+                    "triggers": {
+                        "manual": {
+                            "type": "Request",
+                            "kind": "Http",
+                            "inputs": {}
+                        }
+                    },
+                    "actions": {
+                        "Initialize_variable": {
+                            "runAfter": {},
+                            "type": "InitializeVariable",
+                            "inputs": {
+                                "variables": [
+                                    {
+                                        "name": "inputbody",
+                                        "type": "string",
+                                        "value": "@{triggerBody()}"
+                                    }
+                                ]
+                            }
+                        },
+                        "Response": {
+                            "runAfter": {
+                                "Initialize_variable": [
+                                    "Succeeded"
+                                ]
+                            },
+                            "type": "Response",
+                            "kind": "Http",
+                            "inputs": {
+                                "body": "Consumption Logic App 1",
+                                "statusCode": 200
+                            }
+                        }
+                    },
+                    "outputs": {}
+                }}
