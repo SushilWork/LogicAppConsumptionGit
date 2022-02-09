@@ -31,7 +31,7 @@
                             "type": "Response",
                             "kind": "Http",
                             "inputs": {
-                                "body": "Consumption Logic App 1 updated",
+                                "body": "Consumption Logic App 1 updated 2",
                                 "statusCode": 200
                             }
                         }
