@@ -14,33 +14,69 @@
             "location": "australiasoutheast",
             "name": "[parameters('workflows_LogicAppCnspn_name')]",
             "properties": {
-                "definition": {
-                    "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
-                    "contentVersion": "1.0.0.0",
-                    "parameters": {},
-                    "triggers": {
-                        "manual": {
-                            "type": "Request",
-                            "kind": "Http",
-                            "inputs": {}
-                        }
-                    },
-                    "actions": {
-                        "Response": {
-                            "runAfter": {},
-                            "type": "Response",
-                            "kind": "Http",
-                            "inputs": {
-                                "body": "Consumption Logic App 1 updated 2",
-                                "statusCode": 200
-                            }
-                        }
-                    },
-                    "outputs": {}
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Response": {
+                "inputs": {
+                    "body": "Consumption Logic App 1 updated",
+                    "statusCode": 200
                 },
-                "parameters": {},
-                "state": "Enabled"
+                "kind": "Http",
+                "runAfter": {
+                    "Send_an_email_(V2)": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Response"
             },
+            "Send_an_email_(V2)": {
+                "inputs": {
+                    "body": {
+                        "Body": "<p>Update consumption app from devops</p>",
+                        "Subject": "Update consumption app from devops",
+                        "To": "sushil.nikhare@gmail.com"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                    },
+                    "method": "post",
+                    "path": "/v2/Mail"
+                },
+                "runAfter": {},
+                "type": "ApiConnection"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "manual": {
+                "inputs": {},
+                "kind": "Http",
+                "type": "Request"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "office365": {
+                    "connectionId": "/subscriptions/c55d756b-faa7-47de-ae2d-835ad2e9dc15/resourceGroups/RG-LogicApps/providers/Microsoft.Web/connections/office365",
+                    "connectionName": "office365",
+                    "id": "/subscriptions/c55d756b-faa7-47de-ae2d-835ad2e9dc15/providers/Microsoft.Web/locations/australiasoutheast/managedApis/office365"
+                }
+            }
+        }
+    }
+},
             "scale": null,
             "tags": {},
             "type": "Microsoft.Logic/workflows"
